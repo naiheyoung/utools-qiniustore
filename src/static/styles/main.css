@@ -1,0 +1,42 @@
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+::selection {
+  background-color: #646cff;
+  color: #fff;
+}
+
+html.dark {
+  background: #121212;
+}
+
+.upload_list ul li {
+  border-bottom: 1px dashed rgba(255, 255, 255, .2);
+}
+
+select {
+  background: #121212;
+  border: none;
+  outline: none;
+  transition: .25s;
+}
+
+select option {
+  background: #121212;
+  border: none;
+  outline: none;
+  transition: .25s;
+}
+
+select option:checked {
+  color: #646cff;
+}
+
+i.bx.bx-loader-alt.bx-spin::before {
+  font-size: 24px;
+}

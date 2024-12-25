@@ -1,0 +1,22 @@
+{
+  "main": "index.html",
+  "logo": "assets/images/logo.png",
+  "platform": [
+    "win32"
+  ],
+  "features": [
+    {
+      "code": "upload",
+      "explain": "file to qiniu store",
+      "cmds": [
+        "七牛云存储",
+        "upload",
+        "file",
+        "img"
+      ]
+    }
+  ],
+  "development": {
+    "main": "http://localhost:3000/"
+  }
+}
