@@ -24,13 +24,13 @@ export const useUploadFiles = defineStore('uploadFile', () => {
 })
 
 export const useUploadInfo = defineStore('uploadToken', () => {
-  let accessKey = $ref<string>('')
-  let secretKey = $ref<string>('')
-  let bucket = $ref<string>('')
-  let dir = $ref<string>('')
-  let buckets = $ref<string[]>([])
-  let beian = $ref<boolean>(true)
-  let tinifyKey = $ref<string>('')
+  let accessKey = $ref<string>((db.get('ACCESS_KEY') as string) || '')
+  let secretKey = $ref<string>((db.get('SECRET_KEY') as string) || '')
+  let bucket = $ref<string>((db.get('BUCKET') as string) || '')
+  let dir = $ref<string>((db.get('DIR') as string) || '')
+  let buckets = $ref<string[]>((db.get('BUCKETS') as string[]) || [])
+  let beian = $ref<boolean>(db.get('BEIAN') as boolean)
+  let tinifyKey = $ref<string>((db.get('TINIFY_KEY') as string) || '')
 
   const getAccessKey = () => accessKey
   const getSecretKey = () => secretKey
@@ -40,13 +40,34 @@ export const useUploadInfo = defineStore('uploadToken', () => {
   const isBeian = () => beian
   const getTinifyKey = () => tinifyKey
 
-  const setAccessKey = (v: string) => (accessKey = v)
-  const setSecretKey = (v: string) => (secretKey = v)
-  const setBucket = (v: string) => (bucket = v)
-  const setDir = (v: string) => (dir = v)
-  const setBuckets = (v: string[]) => (buckets = v)
-  const setBeian = (v: boolean) => (beian = v)
-  const setTinifyKey = (v: string) => (tinifyKey = v)
+  const setAccessKey = (v: string) => {
+    accessKey = v
+    db.set('ACCESS_KEY', v)
+  }
+  const setSecretKey = (v: string) => {
+    secretKey = v
+    db.set('SECRET_KEY', v)
+  }
+  const setBucket = (v: string) => {
+    bucket = v
+    db.set('BUCKET', v)
+  }
+  const setDir = (v: string) => {
+    dir = v
+    db.set('DIR', v)
+  }
+  const setBuckets = (v: string[]) => {
+    buckets = v
+    db.set('BUCKETS', v)
+  }
+  const setBeian = (v: boolean) => {
+    beian = v
+    db.set('BEIAN', v)
+  }
+  const setTinifyKey = (v: string) => {
+    tinifyKey = v
+    db.set('TINIFY_KEY', v)
+  }
 
   const getAll = () => {
     return {

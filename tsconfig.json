@@ -15,7 +15,8 @@
     "types": [
       "vite/client",
       "unplugin-vue-macros/macros-global",
-      "unplugin-vue-router/client"
+      "unplugin-vue-router/client",
+      "utools-api-types"
     ],
     "allowJs": true,
     "strict": true,

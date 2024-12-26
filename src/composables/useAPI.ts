@@ -1,6 +1,7 @@
 import { AxiosError } from 'axios'
 
-const { setBuckets, getBucket, isBeian, getDir, getTinifyKey } = useUploadInfo()
+const { setBuckets, getBucket, isBeian, getDir } = useUploadInfo()
+const { setErrorInfo } = useOther()
 
 interface UploadResult {
   code: number
@@ -9,9 +10,16 @@ interface UploadResult {
 }
 
 const refreshBuckets = async () => {
-  const res = await request('/api/buckets')
-  if (res.status === 200) {
-    setBuckets(res.data)
+  try {
+    const res = await request('/api/buckets')
+    if (res.status === 200) {
+      setBuckets(res.data)
+    } else {
+      setErrorInfo('Failed to get bucket list.')
+    }
+  } catch (err) {
+    // @ts-ignore
+    setErrorInfo(err.response.data)
   }
 }
 
@@ -29,7 +37,6 @@ const upload = async (file: File): Promise<UploadResult> => {
     formData.append('beian', `${isBeian()}`)
     formData.append('type', file.type)
     formData.append('dir', getDir())
-    formData.append('tinifyKey', getTinifyKey())
     try {
       const res = await request.post('/api/upload', formData, {
         headers: {

@@ -29,12 +29,18 @@
 
 <script setup lang="ts">
 const { getFiles, addFile, removeFile } = useUploadFiles()
+const { setErrorInfo } = useOther()
 
 const dropHandler = (evt: DragEvent) => {
   let files = Array.from(evt.dataTransfer?.files as FileList)
-  files.forEach((file) => {
+  for (const file of files) {
+    const _size = parseFloat((file.size / 1024 / 1024).toFixed(2))
+    if (_size > 5) {
+      setErrorInfo('文件大小请不要超过5MB.')
+      continue
+    }
     let fr: FileReader | null = new FileReader()
-    fr.onload = (event) => {
+    fr.onload = event => {
       addFile({
         name: file.name,
         type: file.type,
@@ -45,6 +51,6 @@ const dropHandler = (evt: DragEvent) => {
       fr = null
     }
     fr.readAsDataURL(file)
-  })
+  }
 }
 </script>

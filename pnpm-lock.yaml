@@ -32,6 +32,9 @@ importers:
       tinify:
         specifier: ^1.7.1
         version: 1.7.1
+      utools-api-types:
+        specifier: ^6.0.0
+        version: 6.0.0
       vue:
         specifier: ^3.5.3
         version: 3.5.9(typescript@5.4.5)
@@ -2007,6 +2010,9 @@ packages:
   utils-merge@1.0.1:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
+
+  utools-api-types@6.0.0:
+    resolution: {integrity: sha512-bGztq7ZA9tCmkfSMfpYtAWnW33yceIWn8xPS9RnQZfYE53gs5ysBanHn7tj92y4VPzMl9ACGA01YHMUahHP0gw==}
 
   vary@1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
@@ -4206,6 +4212,8 @@ snapshots:
       unescape: 1.0.1
 
   utils-merge@1.0.1: {}
+
+  utools-api-types@6.0.0: {}
 
   vary@1.1.2: {}
 

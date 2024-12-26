@@ -18,5 +18,6 @@
   ],
   "development": {
     "main": "http://localhost:3000/"
-  }
+  },
+  "$schema": "./node_modules/utools-api-types/resource/utools.schema.json"
 }
