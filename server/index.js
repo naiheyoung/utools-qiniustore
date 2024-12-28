@@ -94,17 +94,18 @@ app.post('/api/upload', upload.single('file'), async (from, to) => {
       const bucketRes = await bucketManager.listBucketDomains(bucket)
       const domains = bucketRes.data.map(b => b.domain)
       to.status(200).json({
-        link: `${beian ? 'https://' : 'http://'}${domains[0]}/${res.data.key}`,
+        link: `${beian === 'true' ? 'https://' : 'http://'}${domains[0]}/${res.data.key}`,
         source: originalname
       })
     } else {
       to.status(500).json(res.resp.statusMessage)
     }
   } catch (err) {
+    console.error(err)
     if (err instanceof tinify.AccountError) {
       to.status(500).json('TinifyKey is invalid.')
     } else {
-      to.status(500).json(err)
+      to.status(500).json(err.message)
     }
   }
 })
