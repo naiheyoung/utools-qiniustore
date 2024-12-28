@@ -1,6 +1,6 @@
 {
   "main": "index.html",
-  "logo": "assets/images/logo.png",
+  "logo": "logo.png",
   "platform": [
     "win32"
   ],
@@ -19,5 +19,5 @@
   "development": {
     "main": "http://localhost:3000/"
   },
-  "$schema": "./node_modules/utools-api-types/resource/utools.schema.json"
+  "$schema": "../node_modules/utools-api-types/resource/utools.schema.json"
 }
