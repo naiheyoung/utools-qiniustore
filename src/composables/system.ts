@@ -6,7 +6,8 @@ const CONSTANTS = {
   DIR: PREFIX + 'dir',
   BUCKETS: PREFIX + 'buckets',
   BEIAN: PREFIX + 'beian',
-  TINIFY_KEY: PREFIX + 'tinifyKey'
+  TINIFY_KEY: PREFIX + 'tinifyKey',
+  AUTH: PREFIX + 'auth'
 } as const
 
 type KeyOptions =
@@ -17,6 +18,7 @@ type KeyOptions =
   | 'BUCKETS'
   | 'BEIAN'
   | 'TINIFY_KEY'
+  | 'AUTH'
 type ValueOptions = string | number | boolean | string[]
 
 export const db = {

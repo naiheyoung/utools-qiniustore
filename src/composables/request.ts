@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // const { setErrorInfo } = useOther()
-const { getAccessKey, getSecretKey, getTinifyKey } = useUploadInfo()
+const { getAccessKey, getSecretKey, getTinifyKey, isAuth } = useUploadInfo()
 
 const instance = axios.create({
   baseURL: 'http://localhost:9191',
@@ -13,6 +13,7 @@ instance.interceptors.request.use(
     config.headers['accessKey'] = getAccessKey()
     config.headers['secretKey'] = getSecretKey()
     config.headers['tinifyKey'] = getTinifyKey()
+    config.headers['auth'] = isAuth()
     return config
   },
   err => {

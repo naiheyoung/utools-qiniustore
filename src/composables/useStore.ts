@@ -31,6 +31,7 @@ export const useUploadInfo = defineStore('uploadToken', () => {
   let buckets = $ref<string[]>((db.get('BUCKETS') as string[]) || [])
   let beian = $ref<boolean>(db.get('BEIAN') as boolean)
   let tinifyKey = $ref<string>((db.get('TINIFY_KEY') as string) || '')
+  let auth = $ref<boolean>(db.get('AUTH') as boolean)
 
   const getAccessKey = () => accessKey
   const getSecretKey = () => secretKey
@@ -39,6 +40,7 @@ export const useUploadInfo = defineStore('uploadToken', () => {
   const getBuckets = () => buckets
   const isBeian = () => beian
   const getTinifyKey = () => tinifyKey
+  const isAuth = () => auth
 
   const setAccessKey = (v: string) => {
     accessKey = v
@@ -68,6 +70,10 @@ export const useUploadInfo = defineStore('uploadToken', () => {
     tinifyKey = v
     db.set('TINIFY_KEY', v)
   }
+  const setAuth = (v: boolean) => {
+    auth = v
+    db.set('AUTH', v)
+  }
 
   const getAll = () => {
     return {
@@ -93,7 +99,9 @@ export const useUploadInfo = defineStore('uploadToken', () => {
     isBeian,
     setBeian,
     getTinifyKey,
-    setTinifyKey
+    setTinifyKey,
+    isAuth,
+    setAuth
   }
 })
 

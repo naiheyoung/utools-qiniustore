@@ -8,6 +8,13 @@ import tinify from 'tinify'
 const port = 9191
 const app = express()
 
+const putExtra = new qiniu.form_up.PutExtra()
+let mac = null
+let bucketManager = null
+const config = new qiniu.conf.Config()
+config.regionsProvider = qiniu.httpc.Region.fromRegionId('as0')
+const formUploader = new qiniu.form_up.FormUploader(config)
+
 app.use(cors())
 app.use(express.json())
 
@@ -49,19 +56,18 @@ app.get('/api/bucket-domains', async (from, to) => {
 })
 
 app.post('/api/upload', upload.single('file'), async (from, to) => {
-  const { accesskey, secretkey, tinifykey } = from.headers
+  const { accesskey, secretkey, tinifykey, auth } = from.headers
   const { originalname, buffer, size } = from.file
   const { bucket, beian, dir, type } = from.body
-  const mac = new qiniu.auth.digest.Mac(accesskey, secretkey)
+  if (!mac) {
+    mac = new qiniu.auth.digest.Mac(accesskey, secretkey)
+    bucketManager = new qiniu.rs.BucketManager(mac)
+  }
   const putPolicy = new qiniu.rs.PutPolicy({
     scope: bucket,
     expires: 3600 // one hour
   })
-  const bucketManager = new qiniu.rs.BucketManager(mac)
-  const config = new qiniu.conf.Config()
-  config.regionsProvider = qiniu.httpc.Region.fromRegionId('as0')
-  const formUploader = new qiniu.form_up.FormUploader(config)
-  const putExtra = new qiniu.form_up.PutExtra()
+  // optimize: to redis
   const uploadToken = putPolicy.uploadToken(mac)
   try {
     const suffix = originalname.split('.').at(-1)
@@ -70,9 +76,12 @@ app.post('/api/upload', upload.single('file'), async (from, to) => {
       key = `${dir}/${key}`
     }
     let mainBuffer = buffer
-    // compress
-    tinify.key = tinifykey
-    await tinify.validate()
+    if (!auth) {
+      // compress
+      tinify.key = tinifykey
+      // Waiting time is too long. maybe client to upload
+      await tinify.validate()
+    }
     const _size = parseFloat((size / 1024 / 1024).toFixed(2))
     if (tinifykey && tinify.compressionCount <= 400 && _size < 5) {
       const source = tinify.fromBuffer(buffer)
@@ -84,15 +93,8 @@ app.post('/api/upload', upload.single('file'), async (from, to) => {
       // todo: get bucket domains
       const bucketRes = await bucketManager.listBucketDomains(bucket)
       const domains = bucketRes.data.map(b => b.domain)
-      // todo: http or https
-      let prefix = ''
-      if (beian === 'true') {
-        prefix = 'https://'
-      } else {
-        prefix = 'http://'
-      }
       to.status(200).json({
-        link: `${prefix}${domains[0]}/${res.data.key}`,
+        link: `${beian ? 'https://' : 'http://'}${domains[0]}/${res.data.key}`,
         source: originalname
       })
     } else {

@@ -78,11 +78,12 @@
         v-model="config.dir" />
     </div>
     <div mt6>
-      <label for="dir" inline-block w22 text-right mr4>HTTP(S)</label>
+      <label for="beian" inline-block w22 text-right mr4>HTTP(S)</label>
       <Switch
+        id="beian"
         v-model="config.beian"
         tabindex="-1"
-        class="bg-gray-800 relative inline-flex h28px w56px shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
+        class="bg-gray-800 transform-translate-y-5px relative inline-flex h28px w56px shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
         :class="config.beian ? 'bg-[rgba(79,70,229,.65)]!' : 'bg-gray-800'">
         <span class="sr-only">Use setting</span>
         <span
@@ -90,6 +91,7 @@
           :class="config.beian ? 'translate-x-7.8' : 'translate-x-0'"
           class="pointer-events-none inline-block h-[24px] w-[24px] transform rounded-full bg-[rgb(79,70,229)] shadow-lg ring-0 transition duration-200 ease-in-out" />
       </Switch>
+      <span ml4 text-gray opacity80>(域 名 是 否 备 案)</span>
     </div>
     <div mt6>
       <label for="tinifyKey" inline-block w22 text-right mr4>TinifyKey</label>
@@ -162,6 +164,7 @@ watch(
 )
 
 const saveConfig = () => {
+  // todo: verify
   setAccessKey(config.accessKey)
   setSecretKey(config.secretKey)
   setBucket(config.bucket)
